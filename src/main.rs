@@ -79,6 +79,7 @@ async fn token_check(token: &String) -> Result<TokenData<Claims>, Box<dyn std::e
 
     // decodificando o token com a chave para obter as claims
     let claims = decode::<Claims>(&token, &decoding_key, &Validation::new(Algorithm::RS256))?;
+    println!(" token data -> {:?}", claims);
     Ok(claims)
 }
 
@@ -101,7 +102,7 @@ async fn validate_token(req: HttpRequest) -> impl Responder {
                     }
                     Err(e) => {
                         if format!("{:?}", e).contains("ExpiredSignature") {
-                            return HttpResponse::Forbidden().body(format!("{:?}", e));
+                            return HttpResponse::Unauthorized().body(format!("{:?}", e));
                         }
                         if format!("{:?}", e).contains("Error(Base64(") {
                             return HttpResponse::BadRequest().body(format!("{:?}", e));

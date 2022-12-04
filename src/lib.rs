@@ -16,7 +16,11 @@ pub mod token_validator_lib {
         pub sub: String,
         pub resource_access: BTreeMap<String, Role>,
         pub preferred_username: String,
+        pub given_name: String,
+        pub family_name: String,
+        pub email_verified: bool,
         pub email: String,
+        pub name: String,
     }
 
     #[derive(Debug, Serialize, Deserialize)]
