@@ -98,7 +98,9 @@ async fn validate_token(req: HttpRequest) -> impl Responder {
                 // format!("{:?}", token_check(&jwt_token).await)
                 match token_check(&jwt_token).await {
                     Ok(token_data) => {
-                        HttpResponse::Ok().body(serde_json::to_string(&token_data.claims).unwrap())
+                        //HttpResponse::Ok().body(serde_json::to_string(&token_data.claims).unwrap())
+                        HttpResponse::Ok().json(web::Json(&token_data.claims))
+                        //Ok(web::Json(&token_data.claims))
                     }
                     Err(e) => {
                         if format!("{:?}", e).contains("ExpiredSignature") {
